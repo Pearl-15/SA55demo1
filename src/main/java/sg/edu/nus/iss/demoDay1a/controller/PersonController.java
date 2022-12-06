@@ -60,6 +60,21 @@ public class PersonController {
         return "personList";
     }
 
+    @GetMapping(value = "/add")
+    public String addPerson(Model model){
+        Person person = new Person();
+        model.addAttribute("person", person);
+
+        return "addPerson";
+    }
+
+    @PostMapping(value = "/add")
+    public String savePerson(@ModelAttribute(value = "person") Person p){
+        
+        personService.addPerson(p);
+        return "redirect:/persons/list";
+    }
+
     @PostMapping(value = "/update")
     //@ModelAttribute is the data that passed from View when click Update Button
     public String updatePerson(@ModelAttribute(value="per") Person p,Model model){
@@ -77,7 +92,7 @@ public class PersonController {
     @PostMapping(value= "/deletePerson")
     public String deletePerson(@ModelAttribute(value = "person")Person p){
         personService.removerPerson(p);
-        return "redirect: /persons/list";
+        return "redirect:/persons/list";
     }
 
 
